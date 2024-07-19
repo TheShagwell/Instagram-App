@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import { Ionicons, Feather, AntDesign } from "@expo/vector-icons";
 
 export default function PostItemList({ post }: any) {
