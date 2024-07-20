@@ -9,6 +9,8 @@ import {
 } from "react-native";
 import * as ImagePicker from 'expo-image-picker';
 import Button from "~/src/components/Button";
+import { upload } from "cloudinary-react-native";
+import { cld } from "~/src/lib/cloudinary";
 
 export default function Tabs() {
   const [caption, setCaption] = useState("");
@@ -26,7 +28,7 @@ export default function Tabs() {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 1,
+      quality: 0.5, // reduce the size of the application
     });
 
     console.log(result);
@@ -35,6 +37,33 @@ export default function Tabs() {
       setImage(result.assets[0].uri);
     }
   };
+
+  const uploadImage = async () => {
+    // upload the image to cloudinary
+    if(!image){
+      return ;
+    }
+
+    const options = {
+      upload_preset: 'Default', // taken from the "upload presets" on cloudinary server
+      unsigned: true,
+    }
+
+    await upload(cld, {
+      file: image,
+      options: options,
+      callback: (error: any, response: any) => {
+        // handle response
+        console.log('error', error)
+        console.log('response', response)
+      }
+    })
+
+  }
+
+  const createPost = async () => {
+    await uploadImage();
+  }
 
   return (
     <View className="p-3 items-center flex-1">
@@ -65,7 +94,7 @@ export default function Tabs() {
 
       {/* Button */}
       <View className="mt-auto w-full">
-        <Button title="Share" />
+        <Button title="Share" onPress={createPost} />
       </View>
     </View>
   );

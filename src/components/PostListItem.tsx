@@ -19,13 +19,13 @@ export default function PostItemList({ post }: any) {
   image.resize(thumbnail().width(width).height(width))
 
   const avatar = cld.image(post.user.avatar_url);
-  avatar.resize(thumbnail().width(48).height(48))
+  avatar.resize(thumbnail().width(48).height(48).gravity(focusOn(FocusOn.face())))
 
   return (
     <View className="bg-white">
       <View className="p-3 flex-row items-center gap-2">
-        <Image
-          source={{ uri: post.user.image_url }}
+        <AdvancedImage
+          cldImg={avatar}
           className="w-12 aspect-square rounded-full"
         />
         <Text className="font-semibold">{post.user.username}</Text>
