@@ -9,8 +9,7 @@ import {
 } from "react-native";
 import * as ImagePicker from 'expo-image-picker';
 import Button from "~/src/components/Button";
-import { upload } from "cloudinary-react-native";
-import { cld } from "~/src/lib/cloudinary";
+import { uploadImage } from "~/src/lib/cloudinary";
 
 export default function Tabs() {
   const [caption, setCaption] = useState("");
@@ -28,7 +27,7 @@ export default function Tabs() {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 0.5, // reduce the size of the application
+      quality: 0.5, // reduce the size of the application images
     });
 
     console.log(result);
@@ -38,31 +37,12 @@ export default function Tabs() {
     }
   };
 
-  const uploadImage = async () => {
-    // upload the image to cloudinary
-    if(!image){
-      return ;
-    }
-
-    const options = {
-      upload_preset: 'Default', // taken from the "upload presets" on cloudinary server
-      unsigned: true,
-    }
-
-    await upload(cld, {
-      file: image,
-      options: options,
-      callback: (error: any, response: any) => {
-        // handle response
-        console.log('error', error)
-        console.log('response', response)
-      }
-    })
-
-  }
-
   const createPost = async () => {
-    await uploadImage();
+    if(!image){
+      return
+    }
+    const response = await uploadImage(image);
+    console.log("image id", response?.public_id)
   }
 
   return (
