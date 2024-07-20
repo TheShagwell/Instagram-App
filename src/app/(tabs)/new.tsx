@@ -8,6 +8,7 @@ import {
   Pressable,
 } from "react-native";
 import * as ImagePicker from 'expo-image-picker';
+import Button from "~/src/components/Button";
 
 export default function Tabs() {
   const [caption, setCaption] = useState("");
@@ -64,9 +65,7 @@ export default function Tabs() {
 
       {/* Button */}
       <View className="mt-auto w-full">
-        <Pressable className="bg-blue-500 w-full p-3 items-center rounded-md">
-          <Text className="text-white font-semibold">Share</Text>
-        </Pressable>
+        <Button title="Share" />
       </View>
     </View>
   );

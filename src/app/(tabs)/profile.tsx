@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View, Image, TextInput } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { useEffect, useState } from "react";
+import Button from "~/src/components/Button";
 
 export default function Tabs() {
   const [image, setImage] = useState<string | null>(null);
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState("");
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -23,7 +24,7 @@ export default function Tabs() {
   };
 
   return (
-    <View className="p-3">
+    <View className="p-3 flex-1">
       {/* Image picker */}
       {image ? (
         <Image
@@ -36,7 +37,10 @@ export default function Tabs() {
         <View className="w-52 aspect-square self-center rounded-full bg-slate-300" />
       )}
 
-      <Text onPress={pickImage} className="text-blue-500 self-center font-semibold m-5">
+      <Text
+        onPress={pickImage}
+        className="text-blue-500 self-center font-semibold m-5"
+      >
         Change
       </Text>
 
@@ -49,6 +53,11 @@ export default function Tabs() {
         className="border border-gray-300 p-3 rounded-md"
       />
 
+      {/* Buttons */}
+      <View className="gap-2 mt-auto">
+        <Button title="Update profile" />
+        <Button title="Sign out" />
+      </View>
     </View>
   );
 }
