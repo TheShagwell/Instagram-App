@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Image, TextInput } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { useEffect, useState } from "react";
 import Button from "~/src/components/Button";
+import { supabase } from "~/src/lib/supabase";
 
 export default function Tabs() {
   const [image, setImage] = useState<string | null>(null);
@@ -56,7 +57,7 @@ export default function Tabs() {
       {/* Buttons */}
       <View className="gap-2 mt-auto">
         <Button title="Update profile" />
-        <Button title="Sign out" />
+        <Button title="Sign out" onPress={() => supabase.auth.signOut()} />
       </View>
     </View>
   );
